@@ -1,0 +1,8 @@
+.filter-form {
+  margin-bottom: 15px;
+}
+
+.filter-form input[type="text"] {
+  padding: 5px 8px;
+  min-width: 200px;
+}

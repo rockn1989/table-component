@@ -1,0 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0 15px;
+  font-family: "Open sans", sans-serif;
+}
+
+.App {
+  margin: 50px auto;
+  max-width: 1200px;
+}
