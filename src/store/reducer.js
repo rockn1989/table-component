@@ -4,7 +4,6 @@ import { MAX_POSTS } from "../const";
 const initialState = {
   postList: [],
   postsAtPage: [],
-  filterList: [],
   filterId: 0,
   activePage: 1,
 };
@@ -28,20 +27,26 @@ const reducer = (state = initialState, action) => {
         postsAtPage: [...currentPageList],
       };
 
-    case ActionType.FILTER_POST:
+    case ActionType.FILTER_ID:
+      if (!action.payload || action.payload === "") {
+        const filterList = state.postList.slice(
+          (state.activePage - 1) * MAX_POSTS,
+          state.activePage * MAX_POSTS
+        );
+
+        return {
+          ...state,
+          postsAtPage: [...filterList],
+        };
+      }
+
       const filterPosts = state.postList
         .slice((state.activePage - 1) * MAX_POSTS, state.activePage * MAX_POSTS)
-        .filter((post) => post.userId === state.filterId);
+        .filter((post) => post.userId === action.payload);
 
       return {
         ...state,
         postsAtPage: [...filterPosts],
-      };
-
-    case ActionType.FILTER_ID:
-      return {
-        ...state,
-        filterId: action.payload,
       };
 
     case ActionType.SET_CURRENT_PAGE:

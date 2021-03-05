@@ -1,15 +1,15 @@
 import React from "react";
-import { connect } from "react-redux";
-import { ActionCreator } from "../../store/action";
+
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 import { MAX_POSTS } from "../../const";
-import "./pagination.css";
 import PropTypes from "prop-types";
+import "./pagination.css";
 
-const Pagination = ({ activePage, postList, getPostsAtPage }) => {
+const Pagination = ({ activePage, postListLength }) => {
   const [pagination, setPagination] = React.useState([]);
-  const count = postList.length;
+  const count = postListLength;
+
   const createLink = (i) => {
     return (
       <li key={v4()}>
@@ -44,27 +44,14 @@ const Pagination = ({ activePage, postList, getPostsAtPage }) => {
 
   React.useEffect(() => {
     renderPagination(count);
-    getPostsAtPage();
-  }, [count, activePage, getPostsAtPage]);
+  }, [count, activePage]);
 
   return <ul className="pagination">{pagination}</ul>;
 };
 
-const mapStateToProps = (state) => ({
-  postList: state.postList,
-  activePage: state.activePage,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getPostsAtPage() {
-    dispatch(ActionCreator.getPostsAtPage());
-  },
-});
-
 Pagination.propTypes = {
-  postList: PropTypes.array.isRequired,
+  postListLength: PropTypes.number.isRequired,
   activePage: PropTypes.number.isRequired,
-  getPostsAtPage: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Pagination);
+export default Pagination;
